@@ -68,7 +68,7 @@ The application that uses this component. But consider using just gif, there is 
 
 [Shop 6 in 1](https://github.com/keygenqt/km-shop#aurora-app-experimental)
 
-## Preview
+#### Preview
 
 <p>
 <img src="https://raw.githubusercontent.com/keygenqt/lottie-qml/master/data/vokoscreenNG-2023-01-10_13-34-38.gif" width="40%"/>
