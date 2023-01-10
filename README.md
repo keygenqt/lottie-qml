@@ -65,7 +65,7 @@ to advance the animations.
 ## Preview
 
 <p>
-<img src="https://raw.githubusercontent.com/keygenqt/lottie-qml/master/data/vokoscreenNG-2023-01-10_09-41-26.gif" width="100%"/>
+<img src="https://raw.githubusercontent.com/keygenqt/lottie-qml/master/data/vokoscreenNG-2023-01-10_10-02-04.gif" width="100%"/>
 </p>
 
 ## License
