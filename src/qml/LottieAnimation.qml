@@ -18,9 +18,9 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.9
+import QtQuick 2.0
 
-import "private/lottie_shim.js" as Lottie
+import "./private/lottie_shim.js" as Lottie
 
 /**
  * LottieAnimation
@@ -202,12 +202,6 @@ Item {
         // to provide a seamless experience
         property real pendingRawFrame: -1
 
-        readonly property LoggingCategory log: LoggingCategory {
-            name: "org.kde.lottie"
-            // TODO needs bump to Qt 5.12, is it worth it?
-            //defaultLogLevel: LoggingCategory.Info
-        }
-
         onAnimationDataChanged: {
             destroyAnimation();
 
@@ -274,8 +268,8 @@ Item {
                 return;
             }
 
-            console.log(d.log, "Initializing Lottie Animation");
-            var lottie = Lottie.initialize(canvas, d.log);
+            console.log("Initializing Lottie Animation");
+            var lottie = Lottie.initialize(canvas);
 
             var aspectRatio = "none";
 
@@ -339,7 +333,7 @@ Item {
         }
 
         function destroyAndRecreate() {
-            console.log(d.log, "destroy and recreate");
+            console.log("destroy and recreate");
             if (animationItem) {
                 d.pendingRawFrame = animationItem.currentRawFrame;
             }
@@ -377,13 +371,36 @@ Item {
         }
     }
 
-    onWidthChanged: Qt.callLater(d.updateAnimationSize)
-    onHeightChanged: Qt.callLater(d.updateAnimationSize)
-
-    // TODO Would be lovely if we could change those at runtime without recreating the animation
-    onLoopsChanged: Qt.callLater(d.destroyAndRecreate)
-    onClearBeforeRenderingChanged: Qt.callLater(d.destroyAndRecreate)
-    onFillModeChanged: Qt.callLater(d.destroyAndRecreate)
+    onWidthChanged: {
+        var timer = Qt.createQmlObject('import QtQuick 2.0; Timer { onTriggered: d.updateAnimationSize() }', d);
+        timer.interval = 1;
+        timer.repeat = false
+        timer.start();
+    }
+    onHeightChanged: {
+        var timer = Qt.createQmlObject('import QtQuick 2.0; Timer { onTriggered: d.updateAnimationSize() }', d);
+        timer.interval = 1;
+        timer.repeat = false
+        timer.start();
+    }
+    onLoopsChanged: {
+        var timer = Qt.createQmlObject('import QtQuick 2.0; Timer { onTriggered: d.destroyAndRecreate() }', d);
+        timer.interval = 1;
+        timer.repeat = false
+        timer.start();
+    }
+    onClearBeforeRenderingChanged: {
+        var timer = Qt.createQmlObject('import QtQuick 2.0; Timer { onTriggered: d.destroyAndRecreate() }', d);
+        timer.interval = 1;
+        timer.repeat = false
+        timer.start();
+    }
+    onFillModeChanged: {
+        var timer = Qt.createQmlObject('import QtQuick 2.0; Timer { onTriggered: d.destroyAndRecreate() }', d);
+        timer.interval = 1;
+        timer.repeat = false
+        timer.start();
+    }
 
     onSpeedChanged: {
         if (d.animationItem) {
@@ -399,7 +416,7 @@ Item {
     onSourceChanged: {
         // is already JS object, use verbatim
         if (typeof source === "object") { // TODO what about QUrl, I think it is treated as {} here
-            console.log(d.log, "Using source verbatim as it is an object");
+            console.log("Using source verbatim as it is an object");
             d.animationData = source;
             return;
         }
@@ -407,7 +424,7 @@ Item {
         var sourceString = source.toString();
 
         if (sourceString.indexOf("{") === 0) { // startsWith("{"), assume JSON
-            console.log(d.log, "Using source as JSON");
+            console.log("Using source as JSON");
             d.setAnimationDataJson(sourceString);
             return;
         }
@@ -424,11 +441,6 @@ Item {
             // FIXME figure out how to do relative URLs with Ajax
             // Qt.resolvedUrl is relative to *this* file, not the one where the item is actually used from
         }
-
-        // NOTE QML LoggingCategory {} has its internal QLoggingCategory created in
-        // componentCompleted(). There seems to be a situation where this console.log
-        // is executed before the LoggingCategory {} object above has completed.
-        //console.log(d.log, "Fetching source from", url);
 
         var xhr = new XMLHttpRequest()
         // FIXME allow asynchronous
@@ -451,7 +463,12 @@ Item {
     // When re-parenting the item, re-initialize the animation
     // as the drawing context might become invalidated and since it's
     // stored in a variable by Lottie, we would crash somewhere in Qt.
-    onParentChanged: Qt.callLater(d.destroyAndRecreate);
+    onParentChanged: {
+        var timer = Qt.createQmlObject('import QtQuick 2.0; Timer { onTriggered: d.destroyAndRecreate() }', d);
+        timer.interval = 1;
+        timer.repeat = false
+        timer.start();
+    }
 
     Item {
         id: container

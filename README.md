@@ -1,8 +1,9 @@
-# Lottie QML
+# Lottie QML | QtQuick 2.0 Aurora OS
+
 
 This provides a QML `Item` to render Adobe® After Effects™ animations exported as JSON with Bodymovin using the Lottie Web library.
 
-See http://airbnb.io/lottie/
+See http://airbnb.io/lottie/#/web
 
 ## How to use
 
@@ -68,7 +69,7 @@ to advance the animations.
 
 This library is licensed under either version 2.1 of the GNU Lesser General Public License, or (at your option) version 3, or any later version accepted by the membership of KDE e.V. (or its successor approved by the membership of KDE e.V.), see `COPYING.LGPL-2.1`, except for:
 
-### src/qml/3rdparty/lottie.min.js
+### https://cdnjs.com/libraries/bodymovin (lottie.min.js, version: 5.10.1)
 
 ```
 The MIT License (MIT)

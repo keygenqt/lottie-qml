@@ -54,13 +54,13 @@ function clearInterval(id) {
 }
 
 function setTimeout(callback, interval) {
-    if (interval === 0) {
-        // We don't want Qt to compress these hence not just passing "callback"
-        Qt.callLater(function() {
-            callback();
-        });
-        return;
-    }
+//    if (interval === 0) {
+//        // We don't want Qt to compress these hence not just passing "callback"
+//        Qt.callLater(function() {
+//            callback();
+//        });
+//        return;
+//    }
 
     // TODO can we re-use the timers here or is there a Qt.callLater(delay)?
     var timer = Qt.createQmlObject("import QtQuick 2.0; Timer {}", canvasItem, "setTimeout");
@@ -97,7 +97,13 @@ function initialize(canvas) {
         requestAnimationFrame: function (cb) {
             return canvas.requestAnimationFrame(function (timestamp) {
                 // Creating our own timestamp here to workaround the aforementioned Qt bug
-                cb(Date.now());
+                var timer = Qt.createQmlObject("import QtQuick 2.0; Timer {}", canvasItem, "setTimeout");
+                timer.interval = 10;
+                timer.triggered.connect(function () {
+                    cb(Date.now());
+                    timer.destroy();
+                })
+                timer.start();
             });
         },
         cancelAnimationFrame: function (id) {
@@ -138,6 +144,7 @@ function initialize(canvas) {
     // First check whether there is a non-minified version for debugging purposes
     var url = "../3rdparty/lottie.js";
     var lottieJs = Qt.include(url);
+
     // Don't check exception here as we don't want to fall back to minified
     // if you did a typo while developing.
     if (lottieJs.status === 2) {
@@ -154,7 +161,7 @@ function initialize(canvas) {
         throw new Error("Failed to load lottie.min.js");
     }
 
-    console.log(d.log, "Using", url);
+    console.log("Using", url);
 
-    return window.lottie;
+    return window.bodymovin;
 }
