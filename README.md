@@ -10,7 +10,7 @@ See http://airbnb.io/lottie/#/web
 You can use the `LottieAnimation` item just like any other `QtQuick` element, such as an `Image` and place it in your scene any way you please.
 
 ```
-import org.kde.lottie 1.0
+import "../lottie-qml/src/qml" as LottieQml
 
 LottieAnimation {
     id: fancyAnimation
@@ -51,11 +51,8 @@ You can also add multiple files and switch between them using the ComboBox in th
 ## How to install
 
 ```
-mkdir build
-cd build
-cmake ..
-make
-make install
+git clone https://github.com/keygenqt/lottie-qml.git
+mv lottie-qml /to/project/qml
 ```
 
 ## Known issues
@@ -64,6 +61,9 @@ make install
 causing the animations to not advance properly. There is currently a workaround in place that uses the current time
 to advance the animations.
 * [QTBUG-71524](https://bugreports.qt.io/browse/QTBUG-71524): You cannot use the non-minified `lottie.js` as Qt chokes on reserved keywords used as function names and arguments inside.
+
+## Preview
+
 
 ## License
 
