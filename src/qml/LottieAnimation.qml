@@ -122,17 +122,9 @@ Item {
     property alias renderTarget: canvas.renderTarget
 
     /**
-     * Emitted when the last loop of the animation finishes.
-     * @note This does not work right now
+     * Emitted when initialize
      */
-    signal finished()
-
-    /**
-     * Emitted when a loop of the animation finishes.
-     * @param currentLoop The number of the loop that just finished.
-     * @note This does not work right now
-     */
-    signal loopFinished(int currentLoop)
+    signal initialize()
 
     /**
      * Start the animation.
@@ -330,6 +322,8 @@ Item {
 
             status = Image.Ready;
             errorString = "";
+
+            initialize()
         }
 
         function destroyAndRecreate() {
