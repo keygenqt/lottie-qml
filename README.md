@@ -62,10 +62,16 @@ causing the animations to not advance properly. There is currently a workaround 
 to advance the animations.
 * [QTBUG-71524](https://bugreports.qt.io/browse/QTBUG-71524): You cannot use the non-minified `lottie.js` as Qt chokes on reserved keywords used as function names and arguments inside.
 
+## Demo app 
+
+The application that uses this component. But consider using just gif, there is a delay.
+
+[Shop 6 in 1](https://github.com/keygenqt/km-shop#aurora-app-experimental)
+
 ## Preview
 
 <p>
-<img src="https://raw.githubusercontent.com/keygenqt/lottie-qml/master/data/vokoscreenNG-2023-01-10_10-02-04.gif" width="100%"/>
+<img src="https://raw.githubusercontent.com/keygenqt/lottie-qml/master/data/vokoscreenNG-2023-01-10_13-34-38.gif" width="40%"/>
 </p>
 
 ## License
